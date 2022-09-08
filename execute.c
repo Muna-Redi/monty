@@ -44,28 +44,26 @@ void (*op_func(const char *mcode))(stack_t **, unsigned int)
 * @tokens: array of tokens
 * Return: void
 */
-void _monty(stack_t **stack, unsigned int linecount, char **tokens)
+int  _monty(stack_t **stack, unsigned int linecount, char **tokens)
 {
 	void (*fp)(stack_t **stack, unsigned int line_number);
 	const char *mcode;
-	char *ivalue;
+	int ex_code = EXIT_FAILURE;
 
 	mcode = tokens[0];
-	ivalue = tokens[1];
-
 	if (strcmp(mcode, "push") == 0)
 	{
-		op_push(stack, ivalue, linecount, tokens);
-		return;
+		if ((op_push(stack, tokens, linecount)) == 0)
+			return (0);
 	}
 	fp = op_func(mcode);
 	if (fp)
 	{
 		fp(stack, linecount);
-		return;
+		if (linecount == 0)
+			return (EXIT_FAILURE);
+		else
+			return (0);
 	}
-	printf("L%d: unknown instruction %s\n", linecount, tokens[0]);
-	free_stack(stack);
-	free_array(tokens);
-	exit(EXIT_FAILURE);
+	return (ex_code);
 }

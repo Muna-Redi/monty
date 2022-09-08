@@ -61,7 +61,7 @@ typedef struct instruction_s
             /*****************                   ******************/
 /***********                Op_code Functions Used                  *****************/
             /*****************                   ******************/
-void op_push(stack_t **stack, char *value, unsigned int linecount, char **);
+int op_push(stack_t **stack, char **tokens, unsigned int linecount);
 
 void op_pall(stack_t **stack, unsigned int linecount);
 
@@ -99,9 +99,11 @@ char **tokenize(char *buff);
 
 int _err(char *c, char *s, unsigned int linecount, char *command);
 
-void _monty(stack_t **stack, unsigned int linecount, char **tokens);
+int _monty(stack_t **stack, unsigned int linecount, char **tokens);
 
 void (*op_func(const char *mcode))(stack_t **, unsigned int);
+
+int errors(unsigned int line, char *fname, char **tokens, int f);
 
 void free_stack(stack_t **stack);
 

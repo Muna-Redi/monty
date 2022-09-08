@@ -3,7 +3,6 @@
 /**
 * tokenize - tokenizes a string
 * @buff: string to be tokenized
-* @linecount: file line number
 * Return: array of tokens
 */
 char **tokenize(char *buff)
@@ -16,6 +15,9 @@ char **tokenize(char *buff)
 	tokens = malloc(toksize * sizeof(char *));
 	if (tokens == NULL)
 	{
+		free(buff);
+		buff = NULL;
+		free(tokens);
 		return (NULL);
 	}
 	token = strtok(buff, " \t\b\a\n");
@@ -29,19 +31,21 @@ char **tokenize(char *buff)
 		i++;
 		token = strtok(NULL, " \n\b\a\t");
 	}
-	tokens[i] = '\0';
+	tokens[i] = NULL;
+	buff = NULL;
+	free(buff);
 	return (tokens);
 }
 /**
 * free_array - frees double array
-*
-*
+* @arr: array to be freed
+* Return: void
 */
 void free_array(char **arr)
 {
 	int i = 0;
 
-	while(arr[i])
+	while (arr[i])
 	{
 		free(arr[i]);
 		i++;
@@ -51,7 +55,6 @@ void free_array(char **arr)
 /**
  * if_empty_line - A function that checks if line only contains delimiters.
  * @line: The pointer to the line.
- * @delims: The string with delimiter characters.
  * Return: 1 if the line only contains delimiters, otherwise 0.
  */
 int if_empty_line(char *line)
@@ -82,7 +85,7 @@ void free_stack(stack_t **stack)
 	stack_t *tmp = NULL;
 
 	tmp = *stack;
-	while(*stack)
+	while (*stack)
 	{
 		*stack = tmp->next;
 		free(tmp);

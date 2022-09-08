@@ -12,21 +12,19 @@ int main(int argc, char **argv)
 	FILE *fd;
 	const char *file;
 	size_t n = 0;
-	char *buff = NULL, **tokens = NULL;
+	char *buff = NULL, **tokens = NULL, *fname = argv[1];
 	stack_t *stack = NULL;
-	unsigned int linecount = 0;
+	unsigned int linecount = 0, ex_code = EXIT_SUCCESS;
 
 	if (argc != 2)
 	{
-		printf("USAGE: monty file\n");
-		return (EXIT_FAILURE);
+		ex_code = errors(linecount, fname, tokens, 0);
 	}
 	file = argv[1];
 	fd = fopen(file, "r");
 	if (fd == NULL)
 	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
+		ex_code = errors(linecount, fname, tokens, 1);
 	}
 	while ((getline(&buff, &n, fd)) != EOF)
 	{
@@ -36,26 +34,41 @@ int main(int argc, char **argv)
 		tokens = tokenize(buff);
 		if (tokens)
 		{
-			_monty(&stack, linecount, tokens);
-			continue;
+			if ((_monty(&stack, linecount, tokens) == 0))
+				continue;
+			ex_code = errors(linecount, fname, tokens, 2);
+			break;
 		}
 		else
 		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", linecount, tokens[0]);
-			fclose(fd);
-			exit(EXIT_FAILURE);
+			ex_code = errors(linecount, fname, tokens, -1);
+			break;
 		}
 	}
 	free_stack(&stack);
 	free_array(tokens);
 	fclose(fd);
-	return (EXIT_SUCCESS);
+	return (ex_code);
 }
 /**
-* _error - prints error messages
-* @c: error specifier
-* @filename: name of file
-* @linecount: file line number
-* @command: opcode instruction
+* errors - prints error messages
+* @fname: name of file
+* @line: file line number
+* @tokens: opcode instruction array
+* @f: flag
 * Return: void
 */
+int errors(unsigned int line, char *fname, char **tokens, int f)
+{
+	if (f == 0)
+		fprintf(stderr, "USAGE: monty file\n");
+
+	else if (f == 1)
+		fprintf(stderr, "Error: Can't open file %s\n", fname);
+
+	else if (f == 2)
+		fprintf(stderr, "L%d: unknown instruction %s\n", line, tokens[0]);
+	else if (f == -1)
+		fprintf(stderr, "Error: malloc failed\n");
+	return (EXIT_FAILURE);
+}

@@ -4,21 +4,21 @@
 /**
 * op_push - this pushes an integer on to the stack
 * @stack: the stack
-* @value: integer value
+* @tokens: an array containing integer value
 * @linecount: file line number
 * Return: void
 */
-void op_push(stack_t **stack, char *value, unsigned int linecount, char **tok)
+int op_push(stack_t **stack, char **tokens, unsigned int linecount)
 {
 	stack_t *new;
 	int i = 0, num;
+	char *value;
 
+	value = tokens[1];
 	if (strlen(value) < 1)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", linecount);
-		free_stack(stack);
-		free_array(tok);
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	while (value[i])
 	{
@@ -30,23 +30,17 @@ void op_push(stack_t **stack, char *value, unsigned int linecount, char **tok)
 		if ((value[i] < '0') || (value[i] > '9'))
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", linecount);
-			if (*stack || stack)
-				free_stack(stack);
-			free_array(tok);
-			exit(EXIT_FAILURE);
+			return (EXIT_FAILURE);
 		}
 		i++;
 	}
 	new = malloc(sizeof(stack_t));
-		if (new == NULL)
-		{
-			fprintf(stderr, "Error: malloc failed\n");
-			free(new);
-			if (*stack || stack)
-				free_stack(stack);
-			free_array(tok);
-			exit(EXIT_FAILURE);
-		}
+	if (new == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		free(new);
+		return (EXIT_FAILURE);
+	}
 	num = atoi(value);
 	new->prev = NULL;
 	new->n = num;
@@ -55,6 +49,7 @@ void op_push(stack_t **stack, char *value, unsigned int linecount, char **tok)
 	else
 		new->next = NULL;
 	*stack = new;
+	return (0);
 }
 
 /**
@@ -84,13 +79,14 @@ void op_pall(stack_t **stack, __attribute__((unused))unsigned int linecount)
 */
 void op_pint(stack_t **stack, unsigned int linecount)
 {
+
 	stack_t *tmp = NULL;
 
 	if (!stack || !*stack)
 	{
 		fprintf(stderr, "L%d: can't pint, stack empty\n", linecount);
-		free_stack(stack);
-		exit(EXIT_FAILURE);
+		linecount = 0;
+		return;
 	}
 	tmp = *stack;
 	printf("%d\n", tmp->n);

@@ -20,9 +20,8 @@ void (*op_func(const char *mcode))(stack_t **, unsigned int)
 		{"pchar", op_pchar},
 		{"pstr", op_pstr},
 		{"rotl", op_rotl},
-/*
-*		{"rotr", op_rotr},
-*/		{NULL, NULL}
+		{"rotr", op_rotr},
+		{NULL, NULL}
 	};
 	int i = 0;
 

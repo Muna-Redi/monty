@@ -64,7 +64,7 @@ void op_add(stack_t **stack, unsigned int line)
 	tmp = *stack;
 	if (tmp == NULL || tmp->next == NULL)
 	{
-		fprintf(stderr, "L%d: can't swap, stack too short\n", line);
+		fprintf(stderr, "L%d: can't add, stack too short\n", line);
 		*stack = NULL;
 		return;
 	}

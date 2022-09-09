@@ -78,3 +78,28 @@ void op_mod(stack_t **stack, unsigned int line)
 	*stack = tmp->next;
 	free(tmp);
 }
+/**
+* op_pchar - prints the char at the top of the stack
+* @stack: stack address
+* @line: file line number
+* Return: void
+*/
+void op_pchar(stack_t **stack, unsigned int line)
+{
+	stack_t *tmp = NULL;
+
+	tmp = *stack;
+	if (tmp == NULL)
+	{
+		fprintf(stderr, "L%d: can't pchar, stack empty\n", line);
+		*stack = NULL;
+		return;
+	}
+	if (tmp->n < 0 || tmp->n > 127)
+	{
+		fprintf(stderr, "L%d: can't pchar, value out of range\n", line);
+		*stack = NULL;
+		return;
+	}
+	printf("%c\n", tmp->n);
+}

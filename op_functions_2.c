@@ -49,6 +49,29 @@ void op_swap(stack_t **stack, unsigned int line)
 	tmp->prev = NULL;
 	if (new->next)
 		new->next->prev = new;
+}
+/**
+* op_add - adds the top two elements of the stack
+* @stack: stack address
+* @line: file line number
+* Return: void
+*/
+void op_add(stack_t **stack, unsigned int line)
+{
+	int a, b, c;
+	stack_t *tmp = NULL;
 
-	
+	tmp = *stack;
+	if (tmp == NULL || tmp->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line);
+		*stack = NULL;
+		return;
+	}
+	a = tmp->n;
+	b = tmp->next->n;
+	c = a + b;
+	tmp->next->n = c;
+	*stack = tmp->next;
+	free(tmp);
 }

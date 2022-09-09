@@ -10,8 +10,8 @@ void (*op_func(const char *mcode))(stack_t **, unsigned int)
 	instruction_t ops[] = {
 		{"pall", op_pall},
 		{"pint", op_pint},
+		{"pop", op_pop},
 /*
-*		{"pop", op_pop},
 *		{"add", op_add},
 *		{"sub", op_sub},
 *		{"div", op_div},

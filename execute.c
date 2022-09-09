@@ -14,10 +14,10 @@ void (*op_func(const char *mcode))(stack_t **, unsigned int)
 		{"swap", op_swap},
 		{"add", op_add},
 		{"sub", op_sub},
+		{"div", op_div},
+		{"mul", op_mul},
+		{"mod", op_mod},
 /*
-*		{"div", op_div},
-*		{"mul", op_mul},
-*		{"mod", op_mod},
 *		{"pchar", op_pchar},
 *		{"pstr", op_pstr},
 *		{"rotl", op_rotl},

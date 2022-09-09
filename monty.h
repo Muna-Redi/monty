@@ -111,5 +111,6 @@ int if_empty_line(char *line);
 
 void free_array(char **arr);
 
+void clean(FILE *fd, char **tokens, stack_t **stack);
 
 #endif

@@ -16,15 +16,17 @@ int main(int argc, char **argv)
 	stack_t *stack = NULL;
 	unsigned int linecount = 0, ex_code = EXIT_SUCCESS;
 
+	file = argv[1];
 	if (argc != 2)
 	{
 		ex_code = errors(linecount, fname, tokens, 0);
+		return (EXIT_FAILURE);
 	}
-	file = argv[1];
 	fd = fopen(file, "r");
 	if (fd == NULL)
 	{
 		ex_code = errors(linecount, fname, tokens, 1);
+		return (EXIT_FAILURE);
 	}
 	while ((getline(&buff, &n, fd)) != EOF)
 	{
@@ -34,20 +36,15 @@ int main(int argc, char **argv)
 		tokens = tokenize(buff);
 		if (tokens)
 		{
-			if ((_monty(&stack, linecount, tokens) == 0))
+			ex_code = _monty(&stack, linecount, tokens);
+			if  (ex_code == 5)
 				continue;
-			ex_code = errors(linecount, fname, tokens, 2);
+			else if (ex_code == 15)
+				ex_code = errors(linecount, fname, tokens, 2);
 			break;
 		}
-		else
-		{
-			ex_code = errors(linecount, fname, tokens, -1);
-			break;
-		}
+		errors(linecount, fname, tokens, -1);
 	}
-	free_stack(&stack);
-	free_array(tokens);
-	fclose(fd);
 	return (ex_code);
 }
 /**
@@ -69,6 +66,23 @@ int errors(unsigned int line, char *fname, char **tokens, int f)
 	else if (f == 2)
 		fprintf(stderr, "L%d: unknown instruction %s\n", line, tokens[0]);
 	else if (f == -1)
+	{
 		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
 	return (EXIT_FAILURE);
+}
+/**
+* clean - cleans the interpreter
+* @stack: pointer to stack
+* @fd: file stream
+* @tokens: double array
+* @buff: buffer
+* Return: void
+*/
+void clean(FILE *fd, char **tokens, stack_t **stack)
+{
+	free_stack(stack);
+	free_array(tokens);
+	fclose(fd);
 }

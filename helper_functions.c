@@ -16,7 +16,6 @@ char **tokenize(char *buff)
 	if (tokens == NULL)
 	{
 		free(buff);
-		buff = NULL;
 		free(tokens);
 		return (NULL);
 	}
@@ -32,8 +31,6 @@ char **tokenize(char *buff)
 		token = strtok(NULL, " \n\b\a\t");
 	}
 	tokens[i] = NULL;
-	buff = NULL;
-	free(buff);
 	return (tokens);
 }
 /**
@@ -45,12 +42,16 @@ void free_array(char **arr)
 {
 	int i = 0;
 
+	if (arr == NULL)
+		return;
+
 	while (arr[i])
 	{
 		free(arr[i]);
 		i++;
 	}
 	free(arr);
+	arr = NULL;
 }
 /**
  * if_empty_line - A function that checks if line only contains delimiters.
@@ -85,10 +86,14 @@ void free_stack(stack_t **stack)
 	stack_t *tmp = NULL;
 
 	tmp = *stack;
+	if (tmp == NULL)
+		return;
+
 	while (*stack)
 	{
 		*stack = tmp->next;
 		free(tmp);
 		tmp = *stack;
 	}
+	*stack = NULL;
 }

@@ -48,22 +48,28 @@ int  _monty(stack_t **stack, unsigned int linecount, char **tokens)
 {
 	void (*fp)(stack_t **stack, unsigned int line_number);
 	const char *mcode;
-	int ex_code = EXIT_FAILURE;
+	int n = 0;
 
 	mcode = tokens[0];
 	if (strcmp(mcode, "push") == 0)
 	{
-		if ((op_push(stack, tokens, linecount)) == 0)
-			return (0);
+		n = op_push(stack, tokens, linecount);
+		if (n == 5)
+			return (n);
+		else if (n == 0)
+			fprintf(stderr, "Error: malloc failed\n");
+		return (EXIT_FAILURE);
 	}
 	fp = op_func(mcode);
-	if (fp)
+	if (fp != NULL)
 	{
 		fp(stack, linecount);
-		if (linecount == 0)
+		if (*stack == NULL)
 			return (EXIT_FAILURE);
 		else
-			return (0);
+			return (5);
 	}
-	return (ex_code);
+	else if (fp == NULL)
+		return (15);
+	return (n);
 }

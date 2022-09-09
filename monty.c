@@ -77,7 +77,6 @@ int errors(unsigned int line, char *fname, char **tokens, int f)
 * @stack: pointer to stack
 * @fd: file stream
 * @tokens: double array
-* @buff: buffer
 * Return: void
 */
 void clean(FILE *fd, char **tokens, stack_t **stack)

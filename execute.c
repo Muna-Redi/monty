@@ -11,12 +11,12 @@ void (*op_func(const char *mcode))(stack_t **, unsigned int)
 		{"pall", op_pall},
 		{"pint", op_pint},
 		{"pop", op_pop},
+		{"swap", op_swap},
 /*
 *		{"add", op_add},
 *		{"sub", op_sub},
 *		{"div", op_div},
 *		{"mul", op_mul},
-*		{"swap", op_swap},
 *		{"nop", op_nop},
 *		{"mod", op_mod},
 *		{"pchar", op_pchar},

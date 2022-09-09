@@ -75,3 +75,9 @@ void op_add(stack_t **stack, unsigned int line)
 	*stack = tmp->next;
 	free(tmp);
 }
+/**
+* op_nop - do nothing
+* @stack: stack address
+* @line: file line number
+* Return: void
+*/

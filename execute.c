@@ -13,11 +13,10 @@ void (*op_func(const char *mcode))(stack_t **, unsigned int)
 		{"pop", op_pop},
 		{"swap", op_swap},
 		{"add", op_add},
-
-/*		{"sub", op_sub},
+/*
+*		{"sub", op_sub},
 *		{"div", op_div},
 *		{"mul", op_mul},
-*		{"nop", op_nop},
 *		{"mod", op_mod},
 *		{"pchar", op_pchar},
 *		{"pstr", op_pstr},
@@ -51,6 +50,8 @@ int  _monty(stack_t **stack, unsigned int linecount, char **tokens)
 	int n = 0;
 
 	mcode = tokens[0];
+	if (strcmp(mcode, "nop") == 0)
+		return (5);
 	if (strcmp(mcode, "push") == 0)
 	{
 		n = op_push(stack, tokens, linecount);

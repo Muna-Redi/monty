@@ -18,8 +18,8 @@ void (*op_func(const char *mcode))(stack_t **, unsigned int)
 		{"mul", op_mul},
 		{"mod", op_mod},
 		{"pchar", op_pchar},
+		{"pstr", op_pstr},
 /*
-*		{"pstr", op_pstr},
 *		{"rotl", op_rotl},
 *		{"rotr", op_rotr},
 */		{NULL, NULL}
@@ -65,8 +65,10 @@ int  _monty(stack_t **stack, unsigned int linecount, char **tokens)
 	if (fp != NULL)
 	{
 		fp(stack, linecount);
-		if (*stack == NULL)
+		if (*stack == NULL && (fp != op_pstr))
 			return (EXIT_FAILURE);
+		if (fp == op_pstr)
+			return (5);
 		else
 			return (5);
 	}

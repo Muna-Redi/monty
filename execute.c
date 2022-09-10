@@ -7,8 +7,7 @@
 */
 void (*op_func(const char *mcode))(stack_t **, unsigned int)
 {
-	instruction_t ops[] =
-	{
+	instruction_t ops[] = {
 		{"pall", op_pall},
 		{"pint", op_pint},
 		{"pop", op_pop},

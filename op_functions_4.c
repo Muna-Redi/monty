@@ -7,7 +7,7 @@
  * Description: The top element of the stack becomes the last one,
  * and the second top element of the stack becomes the first one.
  */
-void op_rotr(stack_t **st, __attribute__((unused))unsigned int line_number)
+void op_rotl(stack_t **st, __attribute__((unused))unsigned int line_number)
 {
 	int temp;
 	stack_t *pst = *st;
@@ -30,7 +30,7 @@ void op_rotr(stack_t **st, __attribute__((unused))unsigned int line_number)
  * Description: The top element of the stack becomes the last one,
  * and the second top element of the stack becomes the first one.
  */
-void op_rotl(stack_t **st, __attribute__((unused))unsigned int line_number)
+void op_rotr(stack_t **st, __attribute__((unused))unsigned int line_number)
 {
 	int temp;
 	stack_t *pst = *st;

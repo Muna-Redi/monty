@@ -67,9 +67,9 @@ int  _monty(stack_t **stack, unsigned int linecount, char **tokens)
 		if (*stack == NULL && (fp != op_pstr) && (fp != op_pall))
 			return (EXIT_FAILURE);
 		if (fp == op_pstr || (fp == op_rotl) || (fp == op_rotr) || (fp == op_pall))
-			return (0);
+			return (EXIT_SUCCESS);
 		else
-			return (5);
+			return (EXIT_SUCCESS);
 	}
 	else if (fp == NULL)
 		return (15);

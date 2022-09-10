@@ -7,7 +7,8 @@
 */
 void (*op_func(const char *mcode))(stack_t **, unsigned int)
 {
-	instruction_t ops[] = {
+	instruction_t ops[] =
+	{
 		{"pall", op_pall},
 		{"pint", op_pint},
 		{"pop", op_pop},
@@ -55,7 +56,7 @@ int  _monty(stack_t **stack, unsigned int linecount, char **tokens)
 	{
 		n = op_push(stack, tokens, linecount);
 		if (n == 5)
-			return (n);
+			return (EXIT_SUCCESS);
 		else if (n == 0)
 			fprintf(stderr, "Error: malloc failed\n");
 		return (EXIT_FAILURE);
@@ -64,10 +65,10 @@ int  _monty(stack_t **stack, unsigned int linecount, char **tokens)
 	if (fp != NULL)
 	{
 		fp(stack, linecount);
-		if (*stack == NULL && (fp != op_pstr))
+		if (*stack == NULL && (fp != op_pstr) && (fp != op_pall))
 			return (EXIT_FAILURE);
-		if (fp == op_pstr || (fp == op_rotl) || (fp == op_rotr))
-			return (5);
+		if (fp == op_pstr || (fp == op_rotl) || (fp == op_rotr) || (fp == op_pall))
+			return (0);
 		else
 			return (5);
 	}

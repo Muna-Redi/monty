@@ -15,7 +15,7 @@ int op_push(stack_t **stack, char **tokens, unsigned int linecount)
 	char *value;
 
 	value = tokens[1];
-	if (strlen(value) < 1)
+	if (!value)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", linecount);
 		free_stack(stack);

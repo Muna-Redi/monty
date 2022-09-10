@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 		if (tokens)
 		{
 			ex_code = _monty(&stack, linecount, tokens);
-			if  (ex_code == 5)
+			if  (ex_code == 5 || ex_code == EXIT_SUCCESS)
 				continue;
 			else if (ex_code == 15)
 				ex_code = errors(linecount, fname, tokens, 2);

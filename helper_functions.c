@@ -1,37 +1,19 @@
 #include "monty.h"
 
 /**
-* tokenize - tokenizes a string
+* _strtok - tokenizes a string
 * @buff: string to be tokenized
 * Return: array of tokens
 */
-char **tokenize(char *buff)
+char **_strtok(char *buff)
 {
-	char **tokens = NULL, *token = NULL;
-	int toksize = 3, i = 0;
+	char **tokens = NULL;
+	int toksize;
+	char delimeter[] = " \n\t\b\0";
 
-	if (buff == NULL || !(*buff) || if_empty_line(buff) != 0)
-		return (NULL);
-	tokens = malloc(toksize * sizeof(char *));
-	if (tokens == NULL)
-	{
-		free(buff);
-		free(tokens);
-		return (NULL);
-	}
-	token = strtok(buff, " \t\b\a\n");
-	if (token == NULL)
-	{
-		return (NULL);
-	}
-	while (token && i < toksize)
-	{
-		tokens[i] = token;
-		i++;
-		token = strtok(NULL, " \n\b\a\t");
-	}
-	tokens[i] = NULL;
-	return (tokens);
+	toksize = token_size(buff, delimeter);
+	tokens = tokenize(toksize, buff, delimeter);
+	return(tokens);
 }
 /**
 * free_array - frees double array
@@ -45,13 +27,13 @@ void free_array(char **arr)
 	if (arr == NULL)
 		return;
 
-	while (arr[i])
+	while (arr[i] != NULL)
 	{
 		free(arr[i]);
 		i++;
 	}
-	free(arr);
 	arr = NULL;
+	return;
 }
 /**
  * if_empty_line - A function that checks if line only contains delimiters.

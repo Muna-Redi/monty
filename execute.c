@@ -50,7 +50,7 @@ int  _monty(stack_t **stack, unsigned int linecount, char **tokens)
 
 	mcode = tokens[0];
 	if (strcmp(mcode, "nop") == 0 || (mcode[0] == '#'))
-		return (5);
+		return (EXIT_SUCCESS);
 	if (strcmp(mcode, "push") == 0)
 	{
 		n = op_push(stack, tokens, linecount);
@@ -66,8 +66,6 @@ int  _monty(stack_t **stack, unsigned int linecount, char **tokens)
 		fp(stack, linecount);
 		if (*stack == NULL && (fp != op_pstr) && (fp != op_pall))
 			return (EXIT_FAILURE);
-		if (fp == op_pstr || (fp == op_rotl) || (fp == op_rotr) || (fp == op_pall))
-			return (EXIT_SUCCESS);
 		else
 			return (EXIT_SUCCESS);
 	}

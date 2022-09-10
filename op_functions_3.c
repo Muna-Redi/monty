@@ -21,6 +21,12 @@ void op_div(stack_t **stack, unsigned int line)
 	}
 	a = tmp->n;
 	b = tmp->next->n;
+	if (a == 0)
+	{
+		fprintf(stderr, "L%d: division by zero\n", line);
+		free_stack(stack);
+		return;
+	}
 	c = b / a;
 	tmp->next->n = c;
 	*stack = tmp->next;
@@ -73,6 +79,12 @@ void op_mod(stack_t **stack, unsigned int line)
 	}
 	a = tmp->n;
 	b = tmp->next->n;
+	if (a == 0)
+	{
+		fprintf(stderr, "L%d: division by zero\n", line);
+		free_stack(stack);
+		return;
+	}
 	c = b % a;
 	tmp->next->n = c;
 	*stack = tmp->next;
@@ -98,7 +110,7 @@ void op_pchar(stack_t **stack, unsigned int line)
 	if (tmp->n < 0 || tmp->n > 127)
 	{
 		fprintf(stderr, "L%d: can't pchar, value out of range\n", line);
-		*stack = NULL;
+		free_stack(stack);
 		return;
 	}
 	printf("%c\n", tmp->n);

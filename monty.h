@@ -95,7 +95,11 @@ void op_rotr(stack_t **stack, unsigned int linecount);
             /*****************                   ******************/
 /***********                Helper Functions USED                  *****************/
             /*****************                   ******************/
-char **tokenize(char *buff);
+char **_strtok(char *buff);
+
+int token_size(char *str, char *delimiter);
+
+char **tokenize(int size, char *path, char *delimiter);
 
 int _err(char *c, char *s, unsigned int linecount, char *command);
 

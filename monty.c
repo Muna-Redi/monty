@@ -26,6 +26,7 @@ int main(int argc, char **argv)
 	if (fd == NULL)
 	{
 		ex_code = errors(linecount, fname, tokens, 1);
+		free(fd);
 		return (EXIT_FAILURE);
 	}
 	while ((getline(&buff, &n, fd)) != EOF)
@@ -33,7 +34,7 @@ int main(int argc, char **argv)
 		linecount++;
 		if (buff == NULL || (if_empty_line(buff)) != 0)
 			continue;
-		tokens = tokenize(buff);
+		tokens = _strtok(buff);
 		if (tokens)
 		{
 			ex_code = _monty(&stack, linecount, tokens);
@@ -44,7 +45,12 @@ int main(int argc, char **argv)
 			break;
 		}
 		errors(linecount, fname, tokens, -1);
+		break;
 	}
+	free_stack(&stack);
+	free(tokens);
+	free(buff);
+	fclose(fd);
 	return (ex_code);
 }
 /**

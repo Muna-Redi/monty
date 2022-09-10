@@ -13,7 +13,7 @@ char **_strtok(char *buff)
 
 	toksize = token_size(buff, delimeter);
 	tokens = tokenize(toksize, buff, delimeter);
-	return(tokens);
+	return (tokens);
 }
 /**
 * free_array - frees double array
@@ -33,7 +33,6 @@ void free_array(char **arr)
 		i++;
 	}
 	arr = NULL;
-	return;
 }
 /**
  * if_empty_line - A function that checks if line only contains delimiters.

@@ -47,10 +47,7 @@ int main(int argc, char **argv)
 		errors(linecount, fname, tokens, -1);
 		break;
 	}
-	free_stack(&stack);
-	free(tokens);
-	free(buff);
-	fclose(fd);
+	clean(fd, tokens, buff, &stack);
 	return (ex_code);
 }
 /**
@@ -83,11 +80,13 @@ int errors(unsigned int line, char *fname, char **tokens, int f)
 * @stack: pointer to stack
 * @fd: file stream
 * @tokens: double array
+* @buff: buffer to be freed
 * Return: void
 */
-void clean(FILE *fd, char **tokens, stack_t **stack)
+void clean(FILE *fd, char **tokens, char *buff, stack_t **stack)
 {
 	free_stack(stack);
 	free_array(tokens);
+	free(buff);
 	fclose(fd);
 }
